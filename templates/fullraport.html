@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dostępne raporty</title>
+</head>
+<body>
+<p> Wygenerowano następujące podsumowania: </p>
+<table>
+
+    <tbody>
+    {% for raport in raports_list %}
+    <tr>
+        <td>
+        <a href="{{ local_path }}{{ raport }}">{{ raport }}</a>
+{#        {{ raport |  safe}}#}
+        </td>
+    </tr>
+
+  {% endfor %}
+
+
+
+</table>
+
+</body>
+</html>
