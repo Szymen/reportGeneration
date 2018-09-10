@@ -72,7 +72,7 @@ def generate_reports(filename):
                 os.rename("{0}\{1}".format(report_directory, file), "{0}\{1}".format(archive_folder, file))
                 logger.debug("Moved {0} into {1}"
                              .format("{0}\{1}".format(report_directory, file), "{0}\{1}".format(archive_folder, file)))
-            print("Moved wholde content of raport folder into {0}".format(archive_folder))
+            print("Moved whole content of report folder into {0}".format(archive_folder))
 
     report_count = 0
     for record in records:
