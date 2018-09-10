@@ -23,8 +23,10 @@ def read_file(file_name):
 class Report():
 
     fields_to_ommit = "", ""
+    id = -1
 
     def __init__(self, headers ,in_data):
+        # self.id = id
         self.data = {}
         i = 0
         for name in headers:
