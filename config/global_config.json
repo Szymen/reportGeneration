@@ -1,0 +1,8 @@
+{
+
+  "raport_fields_to_ommit": [
+    "Osoba sprawdzająca",
+    "Sygnatura czasowa"
+  ]
+
+}

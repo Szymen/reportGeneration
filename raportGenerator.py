@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 import csv_processor
 import  os, sysconfig, logging, time
-
+import Report
 
 app = Flask(__name__)
 
@@ -15,6 +15,7 @@ try:
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     fh.setFormatter(formatter)
     logger.addHandler(fh)
+    Report.logger = logger
 except Exception:
     print("Something went wrong with setup of logs")
     print("Error message {0}".format(sysconfig.exec_info()[0]))
@@ -79,9 +80,9 @@ def generate_reports(filename):
         # print(record.toString())
         try:
             report_in_html = csv_processor.generate_HTML_report_table(record)
-            file_name = "{0}reports\\sprawdzenie_planu_pracy_{1}.html".format(currentRoot,
-                                                                              record.Drużyna.replace(" ", ""))
-            f_out = open(file_name, 'w')
+            file_name = "{0}reports\\sprawdzenie_programu_pracy_{1}.html".format(currentRoot,
+                                                                              record.groupType.replace(" ", ""))
+            f_out = open(file_name, 'w', encoding="utf-8")
             f_out.write(report_in_html)
             logger.debug("Generated {0}".format(file_name))
             f_out.close()
