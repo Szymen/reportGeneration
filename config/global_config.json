@@ -1,8 +1,14 @@
 {
 
-  "raport_fields_to_ommit": [
+  "report_fields_to_ommit": [
     "Osoba sprawdzająca",
-    "Sygnatura czasowa"
+    "Sygnatura czasowa",
+    "ID",
+    "Godzina rozpoczęcia",
+    "Godzina ukończenia",
+    "Nazwa",
+    "Adres e-mail",
+    "Imię i nazwisko osoby sprawdzającej"
   ]
 
 }

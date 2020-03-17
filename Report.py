@@ -2,7 +2,7 @@ import re # regex
 import pandas as pd
 import os
 import json
-import raportGenerator
+import reportGenerator
 
 groupTypes = ("Drużyna", "Szczep", "Gromada", "Krąg") #these are the names group types
 
@@ -32,17 +32,17 @@ def getNumberFromFieldVaule(fieldValue):
 
 class Report():
 
-    default_global_config_path = ".\config\global_config.json"
+    default_global_config_path = "./config/global_config.json"
 
-    logger = raportGenerator.logger # injects logger set in reportGenerator.py
+    logger = reportGenerator.logger # injects logger set in reportGenerator.py
 
     logger.debug("Want to read: {0}".format(default_global_config_path))
     if os.path.exists(default_global_config_path):
         with open(default_global_config_path, encoding="UTF-8") as f:
             logger.info("Have read global config from: {0}".format(default_global_config_path))
             config_json = json.load(f)
-            if "raport_fields_to_ommit" in config_json.keys():
-                fields_to_ommit = config_json["raport_fields_to_ommit"]
+            if "report_fields_to_ommit" in config_json.keys():
+                fields_to_ommit = config_json["report_fields_to_ommit"]
                 logger.debug("Fields to ommit: {0}".format(fields_to_ommit))
     else:
         logger.debug("Default global config not found")
@@ -51,6 +51,8 @@ class Report():
 
     def __init__(self, headers ,in_data):
         # self.id = id
+        # logger.debug("Creating report with headers=\'{0}\' \nin_data=\'{1}\'".format(headers, in_data))
+
         self.data = {}
         i = 0
         points_accumulated = 0
@@ -74,8 +76,10 @@ class Report():
             # else:
             #     key_name = name
             # self.data[key_name] = val
-            if name in groupTypes:
-                # print("is  {0} in {1}".format(name, groupTypes))
+            
+            
+            if name in groupTypes or name.startswith("Drużyna") or name.startswith("Szczep") or name.startswith("Gromada"):
+                # print("is >>{0}<< in {1} and val is >>{2}<<".format(name, groupTypes, val))
                 self.data['groupType'] = val
             else:
                 # print("not {0} in {1}".format(name, groupTypes))

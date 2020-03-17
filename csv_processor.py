@@ -25,7 +25,10 @@ def read_file(file_name):
 def create_record_table(records_data):
     headers = records_data.columns
     # print(headers)
-    records_table = [ Report.Report(headers, record) for record in records_data.get_values() ]
+    # print(type(records_data))
+    
+    records_table = [ Report.Report(headers, record) for record in records_data.values ]
+    
     # print("Elementow: {0}".format(records_table.__len__()))
     # for x in records_table:
     #     print(x.shortDesc())
@@ -45,12 +48,25 @@ def generate_HTML_report_table(record):
     background-color: #dddddd;}"
     # if record.Drużyna !=  # dodac co jak szczep/krag/gromada
 
-    result = '<!doctype html><head><style>{1}</style><title>Sprawdzenie poprawnosci dla {0}</title></head><body><h2> Ocena programu pracy {2}</h2><table><tbody>'.format(record.groupType, table_style, record.groupType)
+    result = '<!doctype html><head><meta charset="UTF-8"><style>{1}</style><title>Sprawdzenie poprawnosci dla {0}</title></head><body><h2> Ocena programu pracy {2}</h2><table><tbody>'.format(record.groupType, table_style, record.groupType)
     for field in record.getDisplayableFieldsList():
+        key = Report.getDisplayableFieldName(field) 
+        if key.count("(") > 0:
+            key = key.replace("(", "</br>(")  
+            key = key.replace(")", ")</br>")  
+
         if isinstance( record.data[field], str) :
-            result += "<tr><td>{0}</td><td>{1}</td></tr>".format( Report.getDisplayableFieldName(field), record.data[field])
+            
+            if record.data[field].count(";") > 1:
+                value =  record.data[field].split(";")
+                value = "</br>".join(value)
+            else:
+                value =  record.data[field]
+            
+
+            result += "<tr><td>{0}</td><td>{1}</td></tr>".format( key, value)
         else:
-            result += "<tr><td>{0}</td><td>{1}</td></tr>".format( Report.getDisplayableFieldName(field), record.data[field])
+            result += "<tr><td>{0}</td><td>{1}</td></tr>".format( key, record.data[field])
     result +="<tbody></table></body></html>"
 
 
