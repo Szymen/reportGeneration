@@ -36,12 +36,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="52e7fcad-c979-49d5-82b0-7a2a29a6f459" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/data/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application_logs.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_RemoveDuplicatesFromFieldName.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/reportGeneration.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/reportGeneration.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Report.py" beforeDir="false" afterPath="$PROJECT_DIR$/Report.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/global_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/global_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/csv_processor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reportGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/reportGenerator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,6 +77,32 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\src\reportGeneration" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Python tests in test_RemoveDuplicatesFromFieldName.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="reportGeneration" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/test_RemoveDuplicatesFromFieldName.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python tests.Python tests in test_RemoveDuplicatesFromFieldName.py" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -79,19 +125,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="715" y="321" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1608673958404">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="715" y="321" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1608673958404" />
-    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1610811021079">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1610811021079" />
-    <state x="1257" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1608674766201">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="1257" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1608674766201" />
   </component>
 </project>

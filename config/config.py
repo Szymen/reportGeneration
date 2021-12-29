@@ -1,0 +1,5 @@
+
+APP_ROOT="/app"
+
+CSV_SEPARATOR=','
+CSV_ENCODING="UTF-8"

@@ -3,6 +3,9 @@ import csv_processor
 import  os, sysconfig, logging, time
 import Report
 import sys
+from config import config as global_config
+import pydf
+
 app = Flask(__name__)
 
 
@@ -15,7 +18,7 @@ try:
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     fh.setFormatter(formatter)
     logger.addHandler(fh)
-    # logger.addHandler( logging.StreamHandler(sys.stdout) )
+    logger.addHandler( logging.StreamHandler(sys.stdout) )
     Report.logger = logger
 except Exception:
     print("Something went wrong with setup of logs")
@@ -24,9 +27,6 @@ except Exception:
 
 print("Logs setup into {0}".format(log_file_name))
 
-# currentRoot = "C:\\src\\raportGenerator\\"
-currentRoot = "/c/src/reportGeneration/data/"
-
 @app.route('/')
 def hello_world():
     # return "Semmes that server is working!"
@@ -34,12 +34,12 @@ def hello_world():
 
 @app.route('/reports')
 def list_reports():
-    reports_path = currentRoot +"\\reports"
+    reports_path = global_config.APP_ROOT + os.sep + "reports"
     if os.path.exists(reports_path):
         logger.debug("Getting list of {0}".format(reports_path))
         reports_list = os.listdir(reports_path)  # returns list
         # print(reports_list)
-        return render_template('full_report.html', reports_list = reports_list, local_path =currentRoot + "reports/")
+        return render_template('full_report.html', reports_list = reports_list, local_path = global_config.APP_ROOT + "reports/")
     else:
         return "No reports generated so far in {0}: (.".format(reports_path)
 
@@ -47,15 +47,14 @@ def list_reports():
 @app.route('/generate/<path:filename>')
 def generate_reports(filename):
 
-    # report_data_path = currentRoot + "data\\odpowiedzi.csv"
-    report_data_path = currentRoot + filename
+    report_data_path = global_config.APP_ROOT + os.sep + "data" + os.sep + filename
     logger.info("Will be reading data from {0}".format(report_data_path))
 
     report_data = csv_processor.read_file(report_data_path)
     records = csv_processor.create_record_table(report_data)
 
     # print (records)
-    report_directory = os.path.dirname(currentRoot + "reports\\")
+    report_directory = os.path.dirname(global_config.APP_ROOT + "reports" + os.sep)
     logger.info("Reports will be put into {0}".format(report_directory))
     if not os.path.exists(report_directory):
         logger.debug("Folder {0} had to be created".format(report_directory))
@@ -63,8 +62,8 @@ def generate_reports(filename):
     else:  # there could be leftovers from previous execution
         previous_files = os.listdir(report_directory)
         if previous_files.__len__() != 0:
-            archive_folder = "{0}/old_files_{1}".format(report_directory, time.strftime(
-                "%d%m%Y_%H%M"))  # folder will be like \raports\old_files_20121224_2323
+            archive_folder = "{0}{sep}old_files_{1}".format(report_directory, time.strftime(
+                "%d%m%Y_%H%M"), sep=os.sep)  # folder will be like \raports\old_files_20121224_2323
             if os.path.exists(archive_folder):
                 archive_folder += "_{0}".format(os.listdir(
                     report_directory).__len__() + 1)  # if it was runned the same minute it will get just suffix with count of folders
@@ -73,9 +72,9 @@ def generate_reports(filename):
             for file in previous_files:
                 if file == filename or file.startswith("old_files"):
                     continue
-                os.rename("{0}/{1}".format(report_directory, file), "{0}/{1}".format(archive_folder, file))
+                os.rename("{0}{sep}{1}".format(report_directory, file, sep=os.sep), "{0}{sep}{1}".format(archive_folder, file, sep=os.sep))
                 logger.debug("Moved {0} into {1}"
-                             .format("{0}/{1}".format(report_directory, file), "{0}\{1}".format(archive_folder, file)))
+                             .format("{0}{sep}{1}".format(report_directory, file, sep=os.sep), "{0}{sep}{1}".format(archive_folder, file, sep=os.sep)))
             print("Moved whole content of report folder into {0}".format(archive_folder))
 
     report_count = 0
@@ -83,12 +82,17 @@ def generate_reports(filename):
         # print(record.toString())
         try:
             report_in_html = csv_processor.generate_HTML_report_table(record)
-            file_name = "{0}reports\sprawdzenie_programu_pracy_{1}.html".format(currentRoot,
-                                                                              record.groupType.replace(" ", ""))
+            file_name = "{0}{sep}reports{sep}sprawdzenie_programu_pracy_{1}.html".format(global_config.APP_ROOT,
+                                                                              record.groupType.replace(" ", "").replace("'", "").replace('"', ""), sep=os.sep)
             f_out = open(file_name, 'w', encoding="utf-8")
             f_out.write(report_in_html)
-            logger.debug("Generated {0}".format(file_name))
             f_out.close()
+            logger.debug("Generated {0}".format(file_name))
+
+            os.system("wkhtmltopdf {html_file} {pdf_file}".format(html_file=file_name, pdf_file=file_name.replace("html", "pdf")))
+
+            os.remove(file_name)
+
             report_count += 1
         except Exception:
             logger.error("REPORT GENERATOR: Error message {0}".format(sys.exc_info()))
@@ -101,6 +105,8 @@ def generate_reports(filename):
 
 if __name__ == '__main__':
 
+    print("hello world")
+    print(sys.argv)
     if len(sys.argv) > 1:
         generate_reports(sys.argv[1])
 

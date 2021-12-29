@@ -4,27 +4,23 @@ With this project you can quickly render personalised raports for every answer y
 
 ## Getting Started
 
-.\venv\activate.ps1 ( or similar )
-python raportGenerator.py
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 In order to use the raport generator you have to either have:
 
 * Docker installed
 * PIP for Python 3.9.9
 
-### Installing
+### Installing/Building
 
-PIP instalation
+PIP instalation variant
 ```
 pip3 install -r requirements.txt
 ```
 
-Docker preparation
+Docker preparation variant
 
 ```
-docker build --progress=plain .
+docker build --progress=plain . -t report_generator
 ```
 
 
@@ -48,9 +44,13 @@ Explain what these tests test and why
 Give an example
 ```
 
-## Deployment
+## Usage
 
-Add additional notes about how to deploy this on a live system
+Put CSV files into data folder
+
+```mermaid
+docker run -it -v ${PWD}:/app --rm report_generator csv_file_name.csv
+```
 
 ## Built With
 

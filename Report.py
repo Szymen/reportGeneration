@@ -27,8 +27,31 @@ def getNumberFromFieldVaule(fieldValue):
     except Exception:
         pass
 
-
     return -1
+
+
+def removeDuplicates(fieldName: str) -> str:
+    if type(fieldName) != str:
+        return fieldName
+
+    if len(fieldName) < 5 or fieldName == "":
+        return ""
+
+    if fieldName.count( fieldName[0:4] ) == 1:
+        return fieldName
+
+    substring_len = 4
+    while fieldName.count( fieldName[0:substring_len] ) > 1:
+        substring_len += 1
+        if fieldName.count( fieldName[0:substring_len] ) * substring_len == len(fieldName):
+            # multiple ocurrences of same string
+            substring_len += 1
+            break
+
+    # print("<><>")
+    # print(fieldName[0:substring_len-1])
+    # print("<><>")
+    return fieldName[0:substring_len-1]
 
 class Report():
 
@@ -78,12 +101,13 @@ class Report():
             # self.data[key_name] = val
             
             
-            if name in groupTypes or name.startswith("Drużyna") or name.startswith("Szczep") or name.startswith("Gromada"):
+            if name in groupTypes or name.startswith("Drużyna") or name.startswith("Szczep") or name.startswith("Gromada") or name.startswith("Jednostka"):
                 # print("is >>{0}<< in {1} and val is >>{2}<<".format(name, groupTypes, val))
                 self.data['groupType'] = val
             else:
                 # print("not {0} in {1}".format(name, groupTypes))
-                self.data[name] = val
+                field_name = removeDuplicates(name)
+                self.data[field_name] = removeDuplicates(val)
             i += 1
         # self.data['Punktów ogółem'] = points_accumulated
         # print(self.shortDesc())
@@ -110,5 +134,6 @@ class Report():
         for field in list(self.data.keys()):
             if not field in self.fields_to_ommit:
                 displayableFields.append( field )
+        displayableFields.remove("")
         return displayableFields
 
