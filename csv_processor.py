@@ -63,7 +63,7 @@ font-display:swap;font-style:normal;font-weight:500;
     }
 
     tr:nth-child(even) {
-      background-color: #a6ce39;
+      background-color: #D9E8BF;
     }
     
     """
