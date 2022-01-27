@@ -1,3 +1,4 @@
+from tkinter import E
 from flask import Flask, render_template
 import csv_processor
 import  os, sysconfig, logging, time
@@ -5,6 +6,7 @@ import Report
 import sys
 from config import config as global_config
 import pydf
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -50,11 +52,21 @@ def generate_reports(filename):
     report_data_path = global_config.APP_ROOT + os.sep + "data" + os.sep + filename
     logger.info("Will be reading data from {0}".format(report_data_path))
 
+    if report_data_path.endswith('xlsx') or report_data_path.endswith('xls'):
+        try:
+            read_file = pd.read_excel(report_data_path) 
+            report_data_path = report_data_path.replace("xlsx", "csv").replace("xls", "csv")
+            read_file.to_csv(report_data_path, index=None, header=True)
+            logger.info("Transformed file into csv file")
+        except Exception as e:
+            logger.exception("Couldnt transform xls into csv")
+            logger.exception(e)
+
     report_data = csv_processor.read_file(report_data_path)
     records = csv_processor.create_record_table(report_data)
 
     # print (records)
-    report_directory = os.path.dirname(global_config.APP_ROOT + "reports" + os.sep)
+    report_directory = os.path.dirname(global_config.APP_ROOT + os.sep + "reports" + os.sep)
     logger.info("Reports will be put into {0}".format(report_directory))
     if not os.path.exists(report_directory):
         logger.debug("Folder {0} had to be created".format(report_directory))

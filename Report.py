@@ -101,7 +101,7 @@ class Report():
             # self.data[key_name] = val
             
             
-            if name in groupTypes or name.startswith("Drużyna") or name.startswith("Szczep") or name.startswith("Gromada") or name.startswith("Jednostka"):
+            if name in groupTypes or name.startswith("Drużyna") or name.startswith("Szczep") or name.startswith("Gromada") or name.startswith("Jednostka") or name.startswith("Numer Gromady"):
                 # print("is >>{0}<< in {1} and val is >>{2}<<".format(name, groupTypes, val))
                 self.data['groupType'] = val
             else:
@@ -134,6 +134,7 @@ class Report():
         for field in list(self.data.keys()):
             if not field in self.fields_to_ommit:
                 displayableFields.append( field )
-        displayableFields.remove("")
+        if "" in displayableFields:
+            displayableFields.remove("")
         return displayableFields
 
