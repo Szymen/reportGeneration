@@ -9,7 +9,10 @@
     "Godzina ukończenia",
     "Nazwa",
     "Adres e-mail",
-    "Imię i nazwisko osoby sprawdzającej"
+    "Imię i nazwisko osoby sprawdzającej",
+    "Completion time",
+    "Email",
+    "Start time"
   ]
 
 }

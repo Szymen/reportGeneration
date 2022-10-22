@@ -1,11 +1,11 @@
-from tkinter import E
 from flask import Flask, render_template
+
+import config.config
 import csv_processor
 import  os, sysconfig, logging, time
 import Report
 import sys
 from config import config as global_config
-import pydf
 import pandas as pd
 
 app = Flask(__name__)
@@ -46,9 +46,20 @@ def list_reports():
         return "No reports generated so far in {0}: (.".format(reports_path)
 
 
+def sanitize_path(file_path: str) -> str:
+    if file_path.startswith("."):
+        file_path = file_path[1::]
+    file_path = file_path.replace("/", os.sep)
+    file_path = file_path.replace("\\", os.sep)
+
+    file_path = file_path.replace("{sep}data{sep}".format(sep=os.sep), "")
+
+    return file_path
+
 @app.route('/generate/<path:filename>')
 def generate_reports(filename):
 
+    filename = sanitize_path(filename)
     report_data_path = global_config.APP_ROOT + os.sep + "data" + os.sep + filename
     logger.info("Will be reading data from {0}".format(report_data_path))
 
@@ -56,7 +67,7 @@ def generate_reports(filename):
         try:
             read_file = pd.read_excel(report_data_path) 
             report_data_path = report_data_path.replace("xlsx", "csv").replace("xls", "csv")
-            read_file.to_csv(report_data_path, index=None, header=True)
+            read_file.to_csv(report_data_path, index=None, header=True, sep=config.config.CSV_SEPARATOR)
             logger.info("Transformed file into csv file")
         except Exception as e:
             logger.exception("Couldnt transform xls into csv")
@@ -90,8 +101,8 @@ def generate_reports(filename):
             print("Moved whole content of report folder into {0}".format(archive_folder))
 
     report_count = 0
+
     for record in records:
-        # print(record.toString())
         try:
             report_in_html = csv_processor.generate_HTML_report_table(record)
             file_name = "{0}{sep}reports{sep}sprawdzenie_programu_pracy_{1}.html".format(global_config.APP_ROOT,
@@ -103,7 +114,8 @@ def generate_reports(filename):
 
             os.system("wkhtmltopdf {html_file} {pdf_file}".format(html_file=file_name, pdf_file=file_name.replace("html", "pdf")))
 
-            os.remove(file_name)
+            if config.config.REMOVE_HTML_AFTER:
+                os.remove(file_name)
 
             report_count += 1
         except Exception:

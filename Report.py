@@ -5,10 +5,12 @@ import json
 import reportGenerator
 
 groupTypes = ("Drużyna", "Szczep", "Gromada", "Krąg") #these are the names group types
+GROUP_TYPE_KEY = 'groupType'
+
 
 # @staticmethod
 def getDisplayableFieldName(fieldName):
-    if fieldName == "groupType": # TODO (medium/low): think of better solution for dynamic group typess
+    if fieldName == GROUP_TYPE_KEY: # TODO (medium/low): think of better solution for dynamic group typess
         return "Jednostka"
     return re.sub(r"\. ?\d+", "", fieldName)  # deletes . optionally spaces and digits after this
 
@@ -30,31 +32,48 @@ def getNumberFromFieldVaule(fieldValue):
     return -1
 
 
-def removeDuplicates(fieldName: str) -> str:
-    if type(fieldName) != str:
-        return fieldName
+def _get_longest_duplicate_substring(input_string: str) -> str:
 
-    if len(fieldName) < 5 or fieldName == "":
+    substing_array = []
+    for i in range(input_string.__len__()):
+        work_string = input_string[0:i]
+        sub_string_count = input_string.count(work_string)
+
+        if sub_string_count > 1 and input_string.replace(work_string, "").strip() == "":
+            substing_array.append(work_string)
+
+    if substing_array == []:
+        return input_string.strip()
+
+    result_string = ""
+    for x in substing_array:
+        if result_string.__len__() < x.__len__():
+            result_string = x
+
+    return result_string
+
+
+def remove_duplicates(input_string: str) -> str:
+    if type(input_string) != str:
+        return input_string
+
+    if len(input_string) < 5 or input_string == "":
         return ""
 
-    if fieldName.count( fieldName[0:4] ) == 1:
-        return fieldName
+    if input_string.count(input_string[0:4]) == 1:
+        return input_string
 
-    substring_len = 4
-    while fieldName.count( fieldName[0:substring_len] ) > 1:
-        substring_len += 1
-        if fieldName.count( fieldName[0:substring_len] ) * substring_len == len(fieldName):
-            # multiple ocurrences of same string
-            substring_len += 1
-            break
+    final_result = _get_longest_duplicate_substring(input_string)
 
-    # print("<><>")
-    # print(fieldName[0:substring_len-1])
-    # print("<><>")
-    return fieldName[0:substring_len-1]
+    previous_result = ""
+    while final_result != previous_result:
+        previous_result = final_result
+        final_result = _get_longest_duplicate_substring(final_result)
+
+    # sometimes there is multiple duplicates so we do this recursive
+    return final_result.strip()
 
 class Report():
-
     default_global_config_path = "./config/global_config.json"
 
     logger = reportGenerator.logger # injects logger set in reportGenerator.py
@@ -72,7 +91,7 @@ class Report():
 
     id = -1
 
-    def __init__(self, headers ,in_data):
+    def __init__(self, headers, in_data):
         # self.id = id
         # logger.debug("Creating report with headers=\'{0}\' \nin_data=\'{1}\'".format(headers, in_data))
 
@@ -87,27 +106,14 @@ class Report():
                 val = in_data[i]
                 # TODO ( high ) w niektórych opisach znajduje się rok i jest on przetwarzany jako liczba.
 
-            #     if name != "Drużyna" and name != "Sygnatura czasowa":
-            #         to_be_added = getNumberFromFieldVaule(val)
-            # points_accumulated += to_be_added
-            # print("Dodaje: ['{0}'] = {1} - {2}".format(name, val, to_be_added))
 
-            # if name in self.data.keys() and self.data[name] != val:
-            #     print("Byla wartosc dla: >>{0}<< poprzednia >>{1}<< teraz bedzie >>{2}<<".format(name, self.data[name], val))
-            # if name in self.data.keys():
-            #     key_name = "{0}____{1}".format(self.data.keys().__len__(), name) # some field name can appear multiple times, but they are in different context, so we are adding suffix which will be deleted before getting visible
-            # else:
-            #     key_name = name
-            # self.data[key_name] = val
-            
-            
             if name in groupTypes or name.startswith("Drużyna") or name.startswith("Szczep") or name.startswith("Gromada") or name.startswith("Jednostka") or name.startswith("Numer Gromady"):
                 # print("is >>{0}<< in {1} and val is >>{2}<<".format(name, groupTypes, val))
-                self.data['groupType'] = val
+                self.data[GROUP_TYPE_KEY] = val
             else:
                 # print("not {0} in {1}".format(name, groupTypes))
-                field_name = removeDuplicates(name)
-                self.data[field_name] = removeDuplicates(val)
+                field_name = remove_duplicates(name)
+                self.data[field_name] = remove_duplicates(val)
             i += 1
         # self.data['Punktów ogółem'] = points_accumulated
         # print(self.shortDesc())
@@ -136,5 +142,8 @@ class Report():
                 displayableFields.append( field )
         if "" in displayableFields:
             displayableFields.remove("")
+        # Ensure that groupType is the first key
+        displayableFields.remove(GROUP_TYPE_KEY)
+        displayableFields.insert(0, GROUP_TYPE_KEY)
         return displayableFields
 

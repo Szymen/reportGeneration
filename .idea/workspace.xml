@@ -36,20 +36,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="52e7fcad-c979-49d5-82b0-7a2a29a6f459" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/application_logs.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_RemoveDuplicatesFromFieldName.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/reportGeneration.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/reportGeneration.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Report.py" beforeDir="false" afterPath="$PROJECT_DIR$/Report.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application_logs.log" beforeDir="false" afterPath="$PROJECT_DIR$/application_logs.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/global_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/global_config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/csv_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/csv_processor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reportGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/reportGenerator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_RemoveDuplicatesFromFieldName.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_RemoveDuplicatesFromFieldName.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,16 +71,60 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;last_opened_file_path&quot;: &quot;C:/src/reportGeneration&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\src\reportGeneration" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python tests.Python tests in test_RemoveDuplicatesFromFieldName.py">
+    <configuration name="Python tests for test_RemoveDuplicatesFromFieldName.TestGetNumberFromFieldVaule.test_DuplicateFiveTimesEasy" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="reportGeneration" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_RemoveDuplicatesFromFieldName.TestGetNumberFromFieldVaule.test_DuplicateFiveTimesEasy&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test_RemoveDuplicatesFromFieldName.TestGetNumberFromFieldVaule.test_DuplicateNoDuplicatesInText" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="reportGeneration" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_RemoveDuplicatesFromFieldName.TestGetNumberFromFieldVaule.test_DuplicateNoDuplicatesInText&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test_RemoveDuplicatesFromFieldName.TestGetNumberFromFieldVaule.test_DuplicateNoDuplicatesInTextEasy" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="reportGeneration" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_RemoveDuplicatesFromFieldName.TestGetNumberFromFieldVaule.test_DuplicateNoDuplicatesInTextEasy&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="Python tests in test_RemoveDuplicatesFromFieldName.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="reportGeneration" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -101,6 +142,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python tests.Python tests in test_RemoveDuplicatesFromFieldName.py" />
+        <item itemvalue="Python tests.Python tests for test_RemoveDuplicatesFromFieldName.TestGetNumberFromFieldVaule.test_DuplicateFiveTimesEasy" />
+        <item itemvalue="Python tests.Python tests for test_RemoveDuplicatesFromFieldName.TestGetNumberFromFieldVaule.test_DuplicateNoDuplicatesInTextEasy" />
+        <item itemvalue="Python tests.Python tests for test_RemoveDuplicatesFromFieldName.TestGetNumberFromFieldVaule.test_DuplicateNoDuplicatesInText" />
       </list>
     </recent_temporary>
   </component>
