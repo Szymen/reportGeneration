@@ -3,9 +3,11 @@ import pandas as pd
 import os
 import json
 import reportGenerator
-
+import config.field_order as field_order
 groupTypes = ("Drużyna", "Szczep", "Gromada", "Krąg") #these are the names group types
-GROUP_TYPE_KEY = 'groupType'
+GROUP_TYPE_KEY = 'Jednostka'
+
+logger = reportGenerator.logger  # injects logger set in reportGenerator.py
 
 
 # @staticmethod
@@ -76,7 +78,6 @@ def remove_duplicates(input_string: str) -> str:
 class Report():
     default_global_config_path = "./config/global_config.json"
 
-    logger = reportGenerator.logger # injects logger set in reportGenerator.py
 
     logger.debug("Want to read: {0}".format(default_global_config_path))
     if os.path.exists(default_global_config_path):
@@ -110,6 +111,7 @@ class Report():
             if name in groupTypes or name.startswith("Drużyna") or name.startswith("Szczep") or name.startswith("Gromada") or name.startswith("Jednostka") or name.startswith("Numer Gromady"):
                 # print("is >>{0}<< in {1} and val is >>{2}<<".format(name, groupTypes, val))
                 self.data[GROUP_TYPE_KEY] = val
+                self.data['groupType'] = val
             else:
                 # print("not {0} in {1}".format(name, groupTypes))
                 field_name = remove_duplicates(name)
@@ -137,13 +139,41 @@ class Report():
 
     def getDisplayableFieldsList(self):
         displayableFields = list()
-        for field in list(self.data.keys()):
-            if not field in self.fields_to_ommit:
-                displayableFields.append( field )
+        # print( field_order.field_order )
+        # print(self.data.keys())
+
+        used_fields = 0
+        not_used_fields = 0
+        ommited = 0
+
+        # for field in list(self.data.keys()):
+        for field in field_order.field_order:
+            if field not in self.fields_to_ommit :
+                if field in self.data.keys():
+                    # logger.debug("field {} present in data.keys()".format(field))
+                    displayableFields.append( field )
+                    used_fields += 1
+                else:
+                    logger.debug("field {} not present in data.keys() <=========".format(field))
+                    not_used_fields += 1
+            else:
+                ommited += 1
+
+        # +1 jest po groupType, które jest dodawane bo gdzieś jest uzywane i bez tego się wysypuje skrypt
+        if used_fields + not_used_fields + ommited +1 != len(self.data.keys()):
+            a = set(displayableFields)
+            b = set(self.data.keys())
+            print(b.difference(a))
+            print("jest bubda")
+            print("Used: {} not_used: {} ommited: {} Self.data.keys: {}".format(used_fields, not_used_fields, ommited, len(self.data.keys())))
+            exit(1)
+
         if "" in displayableFields:
             displayableFields.remove("")
+
         # Ensure that groupType is the first key
         displayableFields.remove(GROUP_TYPE_KEY)
         displayableFields.insert(0, GROUP_TYPE_KEY)
+
         return displayableFields
 

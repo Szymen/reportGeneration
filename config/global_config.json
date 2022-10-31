@@ -12,7 +12,9 @@
     "Imię i nazwisko osoby sprawdzającej",
     "Completion time",
     "Email",
-    "Start time"
+    "Start time",
+    "groupType",
+    ""
   ]
 
 }
