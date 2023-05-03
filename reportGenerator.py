@@ -52,7 +52,7 @@ def sanitize_path(file_path: str) -> str:
     file_path = file_path.replace("/", os.sep)
     file_path = file_path.replace("\\", os.sep)
 
-    file_path = file_path.replace("{sep}data{sep}".format(sep=os.sep), "")
+    # file_path = file_path.replace(f"{os.sep}{config.config.DATA_FOLDER_NAME}{os.sep}", "")
 
     return file_path
 
@@ -60,7 +60,11 @@ def sanitize_path(file_path: str) -> str:
 def generate_reports(filename):
 
     filename = sanitize_path(filename)
-    report_data_path = global_config.APP_ROOT + os.sep + "data" + os.sep + filename
+    if os.path.abspath(filename):
+        report_data_path = filename
+    else:
+        report_data_path = global_config.APP_ROOT + os.sep + "data" + os.sep + filename
+
     logger.info("Will be reading data from {0}".format(report_data_path))
 
     if report_data_path.endswith('xlsx') or report_data_path.endswith('xls'):
@@ -123,6 +127,8 @@ def generate_reports(filename):
 
     logger.info("Successfully created {0} reports".format(report_count))
     print("REPORT GENERATOR: Successfully created {0} reports".format(report_count)) #writes to console
+    if report_count != len(records):
+        logger.error(f"There were {len(records)-report_count} errors during generation")
 
     return "Successfully created {0} reports from file: {1}".format(report_count, report_data_path)
 
