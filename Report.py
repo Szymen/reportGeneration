@@ -6,6 +6,18 @@ import reportGenerator
 
 groupTypes = ("Drużyna", "Szczep", "Gromada", "Krąg") #these are the names group types
 GROUP_TYPE_KEY = 'groupType'
+EMAIL_HEADER_SET = {
+    'Adres e-mail, z którego otrzymaliśmy program'
+    # "Adres e-mail, z którego otrzymaliśmy program",
+    "Adres e-mail, z którego wysłano program",
+    "Adres email, z którego wysłano program",
+    'Adres email, z którego wysłano program',
+    'Mail odbiorcy',
+    'Adres e-mail, z którego otrzymaliśmy program'
+}
+EMAIL_FIELD_KEY = "email_recipent"
+
+TEMPLATE_HEADER = "ocena_templatka"
 
 
 # @staticmethod
@@ -57,11 +69,17 @@ def remove_duplicates(input_string: str) -> str:
     if type(input_string) != str:
         return input_string
 
-    if len(input_string) < 5 or input_string == "":
-        return ""
+    if input_string.strip().lower() == "tak":
+        return "tak"
+
+    if input_string.strip().lower() == "nie":
+        return "nie"
 
     if input_string.count(input_string[0:4]) == 1:
         return input_string
+
+    if len(input_string) < 5 or input_string == "":
+        return ""
 
     final_result = _get_longest_duplicate_substring(input_string)
 
@@ -94,7 +112,8 @@ class Report():
     def __init__(self, headers, in_data):
         # self.id = id
         # logger.debug("Creating report with headers=\'{0}\' \nin_data=\'{1}\'".format(headers, in_data))
-
+        self.template_name = "defaultTemplateName"
+        self.values_changed = False
         self.data = {}
         i = 0
         points_accumulated = 0
@@ -105,11 +124,21 @@ class Report():
                 to_be_added = 0
                 val = in_data[i]
                 # TODO ( high ) w niektórych opisach znajduje się rok i jest on przetwarzany jako liczba.
+            while(name.endswith("\n")):
+                name = name.strip()
 
 
-            if name in groupTypes or name.startswith("Drużyna") or name.startswith("Szczep") or name.startswith("Gromada") or name.startswith("Jednostka") or name.startswith("Numer Gromady"):
+            if name in groupTypes or name.startswith("Drużyna") or name.startswith("Szczep") or name.startswith("Gromada") or name.startswith("Jednostka") or name.startswith("Numer Gromady") or name.startswith("Krąg"):
                 # print("is >>{0}<< in {1} and val is >>{2}<<".format(name, groupTypes, val))
                 self.data[GROUP_TYPE_KEY] = val
+            elif remove_duplicates(name) in EMAIL_HEADER_SET or name in EMAIL_HEADER_SET:
+                # print(f"Znalazlem mail!")
+                # print(f"{val}")
+                # exit(1)
+                self.data[EMAIL_FIELD_KEY] = val.lower().strip()
+            elif remove_duplicates(name) == TEMPLATE_HEADER:
+                # print(f"template name! {val} - {remove_duplicates(val)}")
+                self.template_name = val
             else:
                 # print("not {0} in {1}".format(name, groupTypes))
                 field_name = remove_duplicates(name)
@@ -138,10 +167,18 @@ class Report():
     def getDisplayableFieldsList(self):
         displayableFields = list()
         for field in list(self.data.keys()):
-            if not field in self.fields_to_ommit:
-                displayableFields.append( field )
+            if field.startswith("*"):
+                print(f"Ommiting the field as it starts with asteriks! >{field}<")
+                continue
+
+            if field in self.fields_to_ommit or field in EMAIL_HEADER_SET:
+                continue
+
+            displayableFields.append( field )
+
         if "" in displayableFields:
             displayableFields.remove("")
+
         # Ensure that groupType is the first key
         displayableFields.remove(GROUP_TYPE_KEY)
         displayableFields.insert(0, GROUP_TYPE_KEY)

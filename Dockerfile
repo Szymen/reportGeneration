@@ -13,4 +13,4 @@ RUN python -m pip install --upgrade pip && \
 
 ENTRYPOINT ["python3.9", "reportGenerator.py"]
 
-#COPY Report.py Prettyfier.py
+#COPY report.py Prettyfier.py

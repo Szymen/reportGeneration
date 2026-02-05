@@ -60,10 +60,11 @@ def sanitize_path(file_path: str) -> str:
 def generate_reports(filename):
 
     filename = sanitize_path(filename)
-    if os.path.abspath(filename):
+    if os.path.isabs(filename):
+        print("path is absolute")
         report_data_path = filename
     else:
-        report_data_path = global_config.APP_ROOT + os.sep + "data" + os.sep + filename
+        report_data_path = global_config.APP_ROOT + os.sep + "_storage"  + os.sep + "data" + os.sep + filename
 
     logger.info("Will be reading data from {0}".format(report_data_path))
 
@@ -109,8 +110,15 @@ def generate_reports(filename):
     for record in records:
         try:
             report_in_html = csv_processor.generate_HTML_report_table(record)
-            file_name = "{0}{sep}reports{sep}sprawdzenie_programu_pracy_{1}.html".format(global_config.APP_ROOT,
-                                                                              record.groupType.replace(" ", "").replace("'", "").replace('"', ""), sep=os.sep)
+            file_name = "{0}{sep}reports{sep}{template_name}__{recipent_email}__sprawdzenie_programu_pracy{checker}_{1}.html".format(
+                global_config.APP_ROOT,
+                    record.groupType.replace(" ", "").replace("'", "").replace('"', ""),
+                    sep=os.sep,
+                    recipent_email=record.data['email_recipent'],
+                    template_name=record.template_name,
+                    checker="_namiestnictwo" if filename != "ZP.xlsx" else ""
+                # checker = "" if filename != "ZP.xlsx" else ""
+            )
             f_out = open(file_name, 'w', encoding="utf-8")
             f_out.write(report_in_html)
             f_out.close()
@@ -122,7 +130,8 @@ def generate_reports(filename):
                 os.remove(file_name)
 
             report_count += 1
-        except Exception:
+        except Exception as e:
+            logger.error(e, exc_info=True )
             logger.error("REPORT GENERATOR: Error message {0}".format(sys.exc_info()))
 
     logger.info("Successfully created {0} reports".format(report_count))
@@ -139,7 +148,11 @@ if __name__ == '__main__':
     print(sys.argv)
     if len(sys.argv) > 1:
         generate_reports(sys.argv[1])
-
+    else:
+        generate_reports(f"examples{os.sep}example_spreadsheet.xls")
+    #
+    # if global_config.SEND_MAILS:
+    #     Mail.send_reports()
     # print("Application is serving this maping: \n{0}".format(app.url_map))
     # print("") # for empty line
     # app.run()

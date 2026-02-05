@@ -12,7 +12,10 @@
     "Imię i nazwisko osoby sprawdzającej",
     "Completion time",
     "Email",
-    "Start time"
+    "Start time",
+    "Adres e-mail, z którego otrzymaliśmy program",
+    "email_recipent",
+    "ocena_templatka"
   ]
 
 }
