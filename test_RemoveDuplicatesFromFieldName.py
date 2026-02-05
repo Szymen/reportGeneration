@@ -81,5 +81,15 @@ Obrzędowość
         returnValue = remove_duplicates(fieldValue)
         self.assertEqual(returnValue, fieldValue)
 
+    def test_tak(self):
+        fieldValue = "Tak"
+        returnValue = remove_duplicates(fieldValue)
+        self.assertEqual("tak", returnValue)
+
+    def test_nieDot(self):
+        fieldValue = "nie."
+        returnValue = remove_duplicates(fieldValue)
+        self.assertEqual("nie.", returnValue)
+
 if __name__ == '__main__':
     unittest.main()
